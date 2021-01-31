@@ -1,0 +1,21 @@
+{% extends '_base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+  Подтвердите ваш email
+{% endblock %}
+
+{% block content %}
+
+  {% if messages %}
+    {% for message in messages %}
+      <p>
+        {{ message }}
+      </p>
+    {% endfor %}
+  {% else %}
+    На ваш электронный адрес направлено письмо, перейдите по ссылке из него,
+    <br>
+    чтобы завершить регистрацию.
+  {% endif %}
+{% endblock %}

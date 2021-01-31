@@ -1,0 +1,29 @@
+{% extends '_base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+  Вход на сайт
+{% endblock %}
+
+{% block content %}
+{% if messages %}
+  {% for message in messages %}
+    <p>
+      {{ message }}
+    </p>
+  {% endfor %}
+{% endif %}
+<form method="post">
+  {% csrf_token %}
+  {{ form|crispy }}
+    {% if exceeding_limit %}
+        <script src='https://www.google.com/recaptcha/api.js'></script>
+        <div class="g-recaptcha" 
+        data-sitekey="6Le2BToaAAAAAJyXgGmEhNahfp1CpkqC7SlFu1Ts">
+        </div>
+    {% endif %}
+  <button class="btn btn-success">
+    Войти
+  </button>
+</form>
+{% endblock %}
