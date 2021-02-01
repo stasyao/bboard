@@ -26,4 +26,12 @@
     Войти
   </button>
 </form>
+  <p>
+    Забыли пароль?
+    <br>
+    Перейдите по
+     <a href="{% url 'users:password_reset' %}">
+      ссылке
+     </a>,
+    чтобы восстановить его.
 {% endblock %}

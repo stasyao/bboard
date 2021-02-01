@@ -10,6 +10,7 @@ from .forms import CustomSignupForm
 
 
 class SignUp(CreateView):
+    """Регистрация с активацией аккаунта через email"""
     form_class = CustomSignupForm
     success_url = reverse_lazy('users:confirmation_page')
     template_name = 'registration/signup.html'
@@ -34,7 +35,8 @@ def email_confirm(request, uuid):
 
 
 class CustomLoginView(auth_views.LoginView):
-    
+    """Авторизация по email и паролю
+    с дополнительной рекапчей после 3-го фэйла"""
     def post(self, request, *args, **kwargs):
         form = self.get_form()
         # проверяем, отмечена ли рекапча
@@ -51,10 +53,9 @@ class CustomLoginView(auth_views.LoginView):
 
     def form_invalid(self, form):
         # добавляем логику появления рекапчи после 3 фэйлов с логином/паролем
+        # берем SessionStore object текущего запроса
         session = self.request.session
-        if not session.session_key:
-            # создаём сессию для анонимного пользователя
-            session.save()
+        if not session.get('failed_attempt'):
             # включаем в сессию счётчик неудачных попыток входа
             session['failed_attempt'] = 0
             # срок жизни сессии - пока у юзера не закрыт браузер
@@ -74,3 +75,12 @@ class CustomLoginView(auth_views.LoginView):
                 exceeding_limit=session['exceeding_limit'],
             )
         )
+
+
+class CustomPasswordResetView(auth_views.PasswordResetView):
+    """Восстановление забытого пароля через ссылку на email"""
+    success_url = reverse_lazy('users:password_reset_done')
+
+
+class CustomPasswordResetConfirmView(auth_views.PasswordResetConfirmView):
+    success_url = reverse_lazy('users:password_reset_complete')

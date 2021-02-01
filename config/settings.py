@@ -9,7 +9,7 @@ env.read_env()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env.str("SECRET_KEY", default='')
-DEBUG = env.bool("DEBUG", default=False)
+DEBUG = env.bool("DEBUG", default=True)
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
@@ -116,8 +116,11 @@ STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'users.CustomUser'
 LOGIN_REDIRECT_URL = 'board:home'
 LOGOUT_REDIRECT_URL = 'board:home'
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-DEFAULT_FROM_EMAIL = 'admin@bboard.com'
+
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    DEFAULT_FROM_EMAIL = 'admin@bboard.com'
+
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 GOOGLE_RECAPTCHA_SECRET_KEY = env.str("GOOGLE_RECAPTCHA_SECRET_KEY", default='')
 
