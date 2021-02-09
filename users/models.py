@@ -45,7 +45,7 @@ class CustomUser(AbstractUser):
     email = models.EmailField(
         blank=False,
         unique=True,
-        verbose_name='email' # Не локализуем, общепринятое в мире обозначение
+        verbose_name='email'  # Не локализуем, общепринятое в мире обозначение
     )
     phone_number = models.CharField(
         max_length=10,

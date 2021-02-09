@@ -20,7 +20,7 @@ class CustomUserAdmin(UserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': list_display + ['password1', 'password2',],
+            'fields': list_display + ['password1', 'password2', ],
         }
         ),
     )
@@ -29,5 +29,6 @@ class CustomUserAdmin(UserAdmin):
     )
     search_fields = ('email',)
     ordering = ('email',)
+
 
 admin.site.register(get_user_model(), CustomUserAdmin)
